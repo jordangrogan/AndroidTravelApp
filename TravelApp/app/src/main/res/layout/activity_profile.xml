@@ -28,14 +28,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Name" />
+                android:text="John Smith" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Score" />
+                android:text="Score: 120" />
 
         </LinearLayout>
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Bio" />
+            android:text="Short bio description will be shown here." />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
