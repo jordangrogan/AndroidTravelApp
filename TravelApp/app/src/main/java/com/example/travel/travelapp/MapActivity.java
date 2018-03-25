@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 // Tutorial: http://www.zoftino.com/android-mapview-tutorial
 
@@ -88,6 +89,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         gmap = googleMap;
         gmap.setMinZoomPreference(12);
         LatLng pgh = new LatLng(40.440625, -79.995886);
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(40.446765, -80.015760)).title("Heinz Field")); // Eventually will be populated dynamically
         gmap.moveCamera(CameraUpdateFactory.newLatLng(pgh));
     }
 
