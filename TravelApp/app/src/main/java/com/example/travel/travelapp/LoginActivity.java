@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,42 +31,42 @@ public class LoginActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
 
-        private static final int REQ_CODE_GOOGLE_SIGNIN = 32767 / 2;
+    private static final int REQ_CODE_GOOGLE_SIGNIN = 32767 / 2;
 
-        private GoogleApiClient google;
-        private FirebaseAuth mAuth;
+    private GoogleApiClient google;
+    private FirebaseAuth mAuth;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_login);
-
-
-            SignInButton button = (SignInButton) findViewById(R.id.sign_in_button);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signInClick(v);
-                }
-            });
-
-            // request the user's ID, email address, and basic profile
-            GoogleSignInOptions options = new GoogleSignInOptions.Builder(
-                    GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build();
-
-            // build API client with access to Sign-In API and options above
-            google = new GoogleApiClient.Builder(this)
-                    .enableAutoManage(this, this)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, options)
-                    .addConnectionCallbacks(this)
-                    .build();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
 
+        SignInButton button = (SignInButton) findViewById(R.id.sign_in_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInClick(v);
+            }
+        });
 
-        }
+        // request the user's ID, email address, and basic profile
+        GoogleSignInOptions options = new GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // build API client with access to Sign-In API and options above
+        google = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, options)
+                .addConnectionCallbacks(this)
+                .build();
+
+
+
+    }
 
 
 
