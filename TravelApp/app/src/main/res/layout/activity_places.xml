@@ -6,15 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.example.travel.travelapp.PlacesActivity">
 
-    <TextView
-        android:id="@+id/txtNeighborhood"
+    <LinearLayout
+        android:id="@+id/checkBoxLayout"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:text="Neighborhood"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="131dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/txtNeighborhood"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="Neighborhood"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            tools:layout_editor_absoluteX="131dp"
+            tools:layout_editor_absoluteY="0dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnBack"
