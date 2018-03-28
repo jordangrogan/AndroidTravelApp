@@ -14,7 +14,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void clickMapButton(View view){
-        Intent mapIntent = new Intent(this, FakeMapActivity.class );
+        Intent mapIntent = new Intent(this, MapActivity.class );
         startActivity(mapIntent);
     }
 

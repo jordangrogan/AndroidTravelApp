@@ -32,7 +32,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAwm-WN3FFtApvc6OhZjdTsE3JCgcFjaxE"/>
+            android:value="AIzaSyAwm-WN3FFtApvc6OhZjdTsE3JCgcFjaxE" />
 
         <activity android:name=".ProfileActivity" />
         <activity
@@ -47,7 +47,8 @@
         <activity android:name=".BucketListActivity" />
         <activity android:name=".FakeMapActivity" />
         <activity android:name=".MenuActivity" />
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".PlacesActivity"></activity>
     </application>
 
 </manifest>
