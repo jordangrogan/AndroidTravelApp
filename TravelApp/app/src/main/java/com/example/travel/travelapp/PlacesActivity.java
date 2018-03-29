@@ -1,14 +1,19 @@
 package com.example.travel.travelapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.hardware.camera2.params.BlackLevelPattern;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlacesActivity extends AppCompatActivity {
 
@@ -20,6 +25,15 @@ public class PlacesActivity extends AppCompatActivity {
         // Get Neighborhood Information from Intent
         Intent intent = getIntent();
         String neighborhood = intent.getStringExtra("neighborhood");
+        String place = intent.getStringExtra("place");
+
+//        IntentFilter intentFilter=new MyReceiver =new MyBroadcastReceiver();
+//        IntentFilter("com.pkg.perform.Ruby");
+//        if(intentFilter!=null)
+//        {
+//            registerReceiver(MyReceiver,intentFilter);
+//
+//        }
 
         // Add the Neighborhood to the TextView
         TextView txtNeighborhood = (TextView) findViewById(R.id.txtNeighborhood);
@@ -32,7 +46,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         //TODO: this will need to go inside a database call looping through each option
         CheckBox cb = new CheckBox(getApplicationContext());
-        cb.setText("Add places here");
+        cb.setText(place);
         cb.setTextColor(Color.BLACK);
         cb.setChecked(true); //TODO: depending on what the user has checked this will need to be set to true or false
         ll.addView(cb);
@@ -45,4 +59,7 @@ public class PlacesActivity extends AppCompatActivity {
     public void back(View view) {
         finish();
     }
+
+
 }
+
