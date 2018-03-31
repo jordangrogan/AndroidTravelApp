@@ -11,6 +11,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -26,14 +31,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         // Create ArrayList of neighborhood markers
         neighborhoodMarkers = new ArrayList<MarkerOptions>();
-        // TODO: Connect to Firebase - populate these dynamically (neighborhood name, long, lat)
-        neighborhoodMarkers.add(new MarkerOptions().position(new LatLng(40.446765, -80.015760)).title("North Side"));
-        neighborhoodMarkers.add(new MarkerOptions().position(new LatLng(40.444253, -79.953239)).title("Oakland"));
-        neighborhoodMarkers.add(new MarkerOptions().position(new LatLng(40.440413, -80.002602)).title("Downtown"));
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference neighborhoodTable = fb.child("neighborhoods");
 
-        // Create the map
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        neighborhoodTable.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot data){
+                //generate markers dynamically from fb data
+                for(DataSnapshot neighborhood: data.getChildren()){
+                    neighborhoodMarkers.add(new MarkerOptions().position(new LatLng(neighborhood.child("lat").getValue(double.class),
+                            neighborhood.child("long").getValue(double.class))).title(neighborhood.child("name").getValue(String.class)));
+                }
+                //create map
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                mapFragment.getMapAsync(MapActivity.this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+                //error
+            }
+
+        });
 
     }
     @Override

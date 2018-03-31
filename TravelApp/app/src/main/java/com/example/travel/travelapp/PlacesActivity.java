@@ -1,5 +1,7 @@
 package com.example.travel.travelapp;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +17,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 public class PlacesActivity extends AppCompatActivity {
+    private HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +37,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         // Get Neighborhood Information from Intent
         Intent intent = getIntent();
-        String neighborhood = intent.getStringExtra("neighborhood");
+        final String neighborhood = intent.getStringExtra("neighborhood");
         String place = intent.getStringExtra("place");
 
 //        IntentFilter intentFilter=new MyReceiver =new MyBroadcastReceiver();
@@ -41,17 +54,43 @@ public class PlacesActivity extends AppCompatActivity {
 
 
 
-        LinearLayout ll = findViewById(R.id.checkBoxLayout);
+        final LinearLayout ll = findViewById(R.id.checkBoxLayout);
 
+        //Get username
+        AccountManager manager = AccountManager.get(this);
+        Account[] accounts = manager.getAccountsByType("com.google");
+        final String username = accounts[0].name;
 
         //TODO: this will need to go inside a database call looping through each option
-        CheckBox cb = new CheckBox(getApplicationContext());
-        cb.setText(place);
-        cb.setTextColor(Color.BLACK);
-        cb.setChecked(true); //TODO: depending on what the user has checked this will need to be set to true or false
-        ll.addView(cb);
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        //event listeners
+        fb.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot data){
+                DataSnapshot user_child = data.child("users").child(username).child("neighborhoods")
+                                                .child(neighborhood);
+                for(DataSnapshot place: user_child.getChildren()){
+                    visited.put(place.getKey(), true);
+                }
+                DataSnapshot places_child = data.child("neighborhoods").child(neighborhood).child("places");
+                for(DataSnapshot place: places_child.getChildren()){
+                    CheckBox cb = new CheckBox(getApplicationContext());
+                    cb.setText(place.getKey());
+                    cb.setTextColor(Color.BLACK);
+                    if(visited.get(place.getKey())){
+                        cb.setChecked(true);
+                    }else{
+                        cb.setChecked(false);
+                    }
+                    ll.addView(cb);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError){
 
+            }
+        });
 
     }
 
