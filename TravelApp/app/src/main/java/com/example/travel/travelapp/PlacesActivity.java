@@ -131,20 +131,6 @@ public class PlacesActivity extends AppCompatActivity {
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         fb.child("users").child(username).child("neighborhoods")
                 .child(neighborhood).child(place).removeValue();
-//        neighborhood_table.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Log.i("GOT HERE", "IN THAT SHIT");
-//                dataSnapshot.getRef().removeValue();
-//                return;
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
     }
     // Back button click
     public void back(View view) {
