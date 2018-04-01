@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PlacesActivity extends AppCompatActivity {
-    private HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
+    private static HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         final String neighborhood = intent.getStringExtra("neighborhood");
         String place = intent.getStringExtra("place");
-        
+
         Log.v("neighborhood", ""+neighborhood);
         Log.v("place", ""+place);
 
@@ -71,13 +72,15 @@ public class PlacesActivity extends AppCompatActivity {
         fb.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot data){
+                ll.removeAllViews();
                 DataSnapshot user_child = data.child("users").child(username).child("neighborhoods")
                                                 .child(neighborhood);
                 for(DataSnapshot place: user_child.getChildren()){
                     visited.put(place.getKey(), true);
                 }
                 DataSnapshot places_child = data.child("neighborhoods").child(neighborhood).child("places");
-                for(DataSnapshot place: places_child.getChildren()){
+                for(final DataSnapshot place: places_child.getChildren()){
+                    final String place_holder = place.getKey();
                     CheckBox cb = new CheckBox(getApplicationContext());
                     cb.setText(place.getKey());
                     cb.setTextColor(Color.BLACK);
@@ -86,6 +89,19 @@ public class PlacesActivity extends AppCompatActivity {
                     }else{
                         cb.setChecked(false);
                     }
+
+                    cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if(isChecked){
+                                addToDB(neighborhood, place_holder);
+                            } else{
+                                removeFromDB(neighborhood, place_holder);
+                                PlacesActivity.visited.remove(place_holder);
+                            }
+                        }
+                    });
                     ll.addView(cb);
                 }
             }
@@ -97,7 +113,39 @@ public class PlacesActivity extends AppCompatActivity {
         });
 
     }
+    private void addToDB(String neighborhood, String place){
+        AccountManager manager = AccountManager.get(this);
+        Account[] accounts = manager.getAccountsByType("com.google");
+        final String username = accounts[0].name.split("@")[0];
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        fb.child("users").child(username).child("neighborhoods")
+                                        .child(neighborhood).child(place).setValue(true);
+        return;
+    }
 
+    private void removeFromDB(String neighborhood, final String place){
+
+        AccountManager manager = AccountManager.get(this);
+        Account[] accounts = manager.getAccountsByType("com.google");
+        final String username = accounts[0].name.split("@")[0];
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        fb.child("users").child(username).child("neighborhoods")
+                .child(neighborhood).child(place).removeValue();
+//        neighborhood_table.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Log.i("GOT HERE", "IN THAT SHIT");
+//                dataSnapshot.getRef().removeValue();
+//                return;
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+    }
     // Back button click
     public void back(View view) {
         finish();
