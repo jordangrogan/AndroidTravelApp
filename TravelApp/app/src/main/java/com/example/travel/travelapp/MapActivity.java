@@ -3,6 +3,7 @@ package com.example.travel.travelapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,7 +41,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 //generate markers dynamically from fb data
                 for(DataSnapshot neighborhood: data.getChildren()){
                     neighborhoodMarkers.add(new MarkerOptions().position(new LatLng(neighborhood.child("lat").getValue(double.class),
-                            neighborhood.child("long").getValue(double.class))).title(neighborhood.child("name").getValue(String.class)));
+                            neighborhood.child("long").getValue(double.class))).title(neighborhood.getKey()));
                 }
                 //create map
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -70,7 +71,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public boolean onMarkerClick(final Marker marker) {
 
         String neighborhood = marker.getTitle(); // Get the title from the marker to denote the neighborhood
-
         // Start Places Activity with the neighborhood information
         Intent intent = new Intent(this, PlacesActivity.class);
         intent.putExtra("neighborhood", neighborhood);

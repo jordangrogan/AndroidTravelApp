@@ -40,7 +40,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         final String neighborhood = intent.getStringExtra("neighborhood");
         String place = intent.getStringExtra("place");
-
+        
         Log.v("neighborhood", ""+neighborhood);
         Log.v("place", ""+place);
 
@@ -63,7 +63,7 @@ public class PlacesActivity extends AppCompatActivity {
         //Get username
         AccountManager manager = AccountManager.get(this);
         Account[] accounts = manager.getAccountsByType("com.google");
-        final String username = accounts[0].name;
+        final String username = accounts[0].name.split("@")[0];
 
         //TODO: this will need to go inside a database call looping through each option
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
@@ -81,7 +81,7 @@ public class PlacesActivity extends AppCompatActivity {
                     CheckBox cb = new CheckBox(getApplicationContext());
                     cb.setText(place.getKey());
                     cb.setTextColor(Color.BLACK);
-                    if(visited.get(place.getKey())){
+                    if(visited.get(place.getKey()) != null){
                         cb.setChecked(true);
                     }else{
                         cb.setChecked(false);

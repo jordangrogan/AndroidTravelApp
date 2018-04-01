@@ -1,6 +1,8 @@
 package com.example.travel.travelapp;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +20,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.data.DataBufferObserverSet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity
@@ -76,11 +83,34 @@ public class LoginActivity extends AppCompatActivity
      */
     public void signInClick(View view) {
         Toast.makeText(this, "Sign in was clicked!", Toast.LENGTH_SHORT).show();
+        AccountManager manager = AccountManager.get(this);
+        Account[] accounts = manager.getAccountsByType("com.google");
+        final String username = accounts[0].name.split("@")[0];
+        //Check if user has firebase entry, add one if not
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usertable = fb.child("users");
+        usertable.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean found = false;
+                //create pathway to later check if places have been visited
+                if(!dataSnapshot.child(username).exists()){
+                    dataSnapshot.child(username).child("neighborhoods").child("oakland").child("None").getRef().setValue("false");
+                    dataSnapshot.child(username).child("neighborhoods").child("downtown").child("None").getRef().setValue("false");
+                    dataSnapshot.child(username).child("neighborhoods").child("north side").child("None").getRef().setValue("false");
+                }
 
+                // connect to Google server to log in
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
+                startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
+            }
 
-        // connect to Google server to log in
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
-        startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
