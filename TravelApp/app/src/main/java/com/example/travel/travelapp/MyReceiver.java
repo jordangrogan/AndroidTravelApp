@@ -29,13 +29,13 @@ public class MyReceiver extends BroadcastReceiver {
         Toast toast = Toast.makeText(context, "received", Toast.LENGTH_SHORT);
         toast.show();
 
-        String neighborhood = intent.getStringExtra("neighborhood");
-        String place = intent.getStringExtra("place");
-
+        String storeInfo = intent.getStringExtra("storeInfo");
+        String[] info = storeInfo.split("/"); //[0] is name, [1] is longitude, [2] is latitude
+        //TODO: pick a neighborhood based off of latatude and longitude
         Intent placesIntent = new Intent(context, PlacesActivity.class);
 
-        placesIntent.putExtra("neighborhood", neighborhood);
-        placesIntent.putExtra("place", place);
+        placesIntent.putExtra("neighborhood", "Oakland");
+        placesIntent.putExtra("place", info[0]);
         context.startActivity(placesIntent);
 
     }

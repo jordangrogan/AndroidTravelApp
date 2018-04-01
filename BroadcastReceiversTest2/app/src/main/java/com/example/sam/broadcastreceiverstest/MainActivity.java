@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    String storeName = "Giant Eagle";
+    String latitude = "70";
+    String longitude = "70";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setAction("com.example.travel.travelapp.DISCONNECT");
         intent.setClassName(p, p+".MyReceiver");
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        intent.putExtra("neighborhood", "Oakland");
-        intent.putExtra("place", "Giant Eagle");
+        intent.putExtra("storeInfo", storeName + "/" + latitude + "/" + longitude);
         sendBroadcast(intent);
     }
 }

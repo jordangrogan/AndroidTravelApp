@@ -37,8 +37,12 @@ public class PlacesActivity extends AppCompatActivity {
 
         // Get Neighborhood Information from Intent
         Intent intent = getIntent();
+
         final String neighborhood = intent.getStringExtra("neighborhood");
         String place = intent.getStringExtra("place");
+
+        Log.v("neighborhood", ""+neighborhood);
+        Log.v("place", ""+place);
 
 //        IntentFilter intentFilter=new MyReceiver =new MyBroadcastReceiver();
 //        IntentFilter("com.pkg.perform.Ruby");
