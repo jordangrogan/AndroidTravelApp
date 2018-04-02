@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity
     String neighborhood;
     String place;
     int jumpTo;
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +99,7 @@ public class LoginActivity extends AppCompatActivity
             Intent placesIntent = new Intent(this, PlacesActivity.class);
             placesIntent.putExtra("neighborhood", neighborhood);
             placesIntent.putExtra("place", place);
+            placesIntent.putExtra("name",name);
             startActivity(placesIntent);
         }else {
             Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
@@ -165,6 +167,7 @@ public class LoginActivity extends AppCompatActivity
 
                     }
                 });
+                name = acct.getDisplayName();
 
                 Intent startIntent = new Intent(this, MenuActivity.class );
                 startIntent.putExtra("name",acct.getDisplayName());

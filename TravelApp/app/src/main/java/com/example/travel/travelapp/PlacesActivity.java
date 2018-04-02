@@ -45,6 +45,9 @@ public class PlacesActivity extends AppCompatActivity {
 
         Log.v("neighborhood", ""+neighborhood);
         Log.v("place", ""+place);
+        if(place != null){
+            //TODO: if a place is received from the broadcast receiver it needs added to the database
+        }
 
 //        IntentFilter intentFilter=new MyReceiver =new MyBroadcastReceiver();
 //        IntentFilter("com.pkg.perform.Ruby");
@@ -71,6 +74,8 @@ public class PlacesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot data){
                 ll.removeAllViews();
+                Log.v("ondatachange username", username);
+                Log.v("ondatachange hood", neighborhood);
                 DataSnapshot user_child = data.child("users").child(username).child("neighborhoods")
                                                 .child(neighborhood);
                 for(DataSnapshot place: user_child.getChildren()){
