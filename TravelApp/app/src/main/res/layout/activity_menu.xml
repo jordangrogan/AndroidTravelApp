@@ -32,12 +32,6 @@
             android:onClick="clickProfileButton"
             android:text="Profile" />
 
-        <Button
-            android:id="@+id/sendBroadcastButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="clickBroadcastButton"
-            android:text="Check Stock Balance" />
 
 
     </LinearLayout>

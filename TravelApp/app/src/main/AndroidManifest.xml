@@ -35,8 +35,7 @@
             android:value="AIzaSyAwm-WN3FFtApvc6OhZjdTsE3JCgcFjaxE" />
 
         <activity android:name=".ProfileActivity" />
-        <activity
-            android:name=".LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,18 +46,26 @@
         <activity android:name=".FakeMapActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".MapActivity" />
-        <activity android:name=".PlacesActivity"></activity>
+        <activity android:name=".PlacesActivity" />
 
         <receiver
             android:name=".MyReceiver"
             android:enabled="true"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="my.package.DISCONNECT" />
             </intent-filter>
-
         </receiver>
+
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.travel.travelapp.ProfileActivity" />
+        </activity>
     </application>
 
 </manifest>
