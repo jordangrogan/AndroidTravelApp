@@ -83,33 +83,9 @@ public class LoginActivity extends AppCompatActivity
      */
     public void signInClick(View view) {
         Toast.makeText(this, "Sign in was clicked!", Toast.LENGTH_SHORT).show();
-        AccountManager manager = AccountManager.get(this);
-        Account[] accounts = manager.getAccountsByType("com.google");
-        final String username = accounts[0].name.split("@")[0];
-        //Check if user has firebase entry, add one if not
-        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference usertable = fb.child("users");
-        usertable.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean found = false;
-                //create pathway to later check if places have been visited
-                if(!dataSnapshot.child(username).exists()){
-                    dataSnapshot.child(username).child("neighborhoods").child("oakland").child("None").getRef().setValue("false");
-                    dataSnapshot.child(username).child("neighborhoods").child("downtown").child("None").getRef().setValue("false");
-                    dataSnapshot.child(username).child("neighborhoods").child("north side").child("None").getRef().setValue("false");
-                }
 
-                // connect to Google server to log in
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
-                startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
+        startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
 
     }
 
@@ -145,6 +121,32 @@ public class LoginActivity extends AppCompatActivity
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication Sucessful.", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+
+
+                final String username = acct.getDisplayName();
+                //Check if user has firebase entry, add one if not
+                DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference usertable = fb.child("users");
+                usertable.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean found = false;
+                        //create pathway to later check if places have been visited
+                        if(!dataSnapshot.child(username).exists()){
+                            dataSnapshot.child(username).child("neighborhoods").child("oakland").child("None").getRef().setValue("false");
+                            dataSnapshot.child(username).child("neighborhoods").child("downtown").child("None").getRef().setValue("false");
+                            dataSnapshot.child(username).child("neighborhoods").child("north side").child("None").getRef().setValue("false");
+                        }
+
+                        // connect to Google server to log in
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
 

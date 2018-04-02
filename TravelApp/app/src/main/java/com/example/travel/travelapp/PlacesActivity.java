@@ -30,7 +30,7 @@ import java.util.List;
 
 public class PlacesActivity extends AppCompatActivity {
     private static HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
-
+    private String username = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         // Get Neighborhood Information from Intent
         Intent intent = getIntent();
+        username = intent.getStringExtra("name");
 
         final String neighborhood = intent.getStringExtra("neighborhood");
         String place = intent.getStringExtra("place");
@@ -61,10 +62,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         final LinearLayout ll = findViewById(R.id.checkBoxLayout);
 
-        //Get username
-        AccountManager manager = AccountManager.get(this);
-        Account[] accounts = manager.getAccountsByType("com.google");
-        final String username = accounts[0].name.split("@")[0];
+
 
         //TODO: this will need to go inside a database call looping through each option
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
@@ -114,9 +112,7 @@ public class PlacesActivity extends AppCompatActivity {
 
     }
     private void addToDB(String neighborhood, String place){
-        AccountManager manager = AccountManager.get(this);
-        Account[] accounts = manager.getAccountsByType("com.google");
-        final String username = accounts[0].name.split("@")[0];
+
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         fb.child("users").child(username).child("neighborhoods")
                                         .child(neighborhood).child(place).setValue(true);
@@ -125,9 +121,6 @@ public class PlacesActivity extends AppCompatActivity {
 
     private void removeFromDB(String neighborhood, final String place){
 
-        AccountManager manager = AccountManager.get(this);
-        Account[] accounts = manager.getAccountsByType("com.google");
-        final String username = accounts[0].name.split("@")[0];
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         fb.child("users").child(username).child("neighborhoods")
                 .child(neighborhood).child(place).removeValue();

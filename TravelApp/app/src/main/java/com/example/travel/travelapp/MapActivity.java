@@ -24,11 +24,14 @@ import java.util.ArrayList;
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private ArrayList<MarkerOptions> neighborhoodMarkers;
-
+    private String username = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        Intent i = getIntent();
+        username = i.getStringExtra("name");
+
 
         // Create ArrayList of neighborhood markers
         neighborhoodMarkers = new ArrayList<MarkerOptions>();
@@ -74,6 +77,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Start Places Activity with the neighborhood information
         Intent intent = new Intent(this, PlacesActivity.class);
         intent.putExtra("neighborhood", neighborhood);
+        intent.putExtra("name", username);
         startActivity(intent);
 
         return false;
