@@ -48,7 +48,7 @@ public class PlacesActivity extends AppCompatActivity {
         if(place != null){
             //TODO: if a place is received from the broadcast receiver it needs added to the database
             DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
-            fb.child("neighborhoods").child(neighborhood).child(place).setValue(true);
+            fb.child("neighborhoods").child(neighborhood).child("places").child(place).setValue(true);
         }
 
 //        IntentFilter intentFilter=new MyReceiver =new MyBroadcastReceiver();
@@ -134,7 +134,8 @@ public class PlacesActivity extends AppCompatActivity {
     }
     // Back button click
     public void back(View view) {
-        finish();
+        Intent mapActivity = new Intent(this, MapActivity.class);
+        startActivity(mapActivity);
     }
 
 
