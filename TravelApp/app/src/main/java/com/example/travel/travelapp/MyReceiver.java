@@ -32,10 +32,11 @@ public class MyReceiver extends BroadcastReceiver {
         String storeInfo = intent.getStringExtra("storeInfo");
         String[] info = storeInfo.split("/"); //[0] is name, [1] is longitude, [2] is latitude
         //TODO: pick a neighborhood based off of latatude and longitude
-        Intent placesIntent = new Intent(context, PlacesActivity.class);
+        Intent placesIntent = new Intent(context, LoginActivity.class);
 
         placesIntent.putExtra("neighborhood", "Oakland");
         placesIntent.putExtra("place", info[0]);
+        placesIntent.putExtra("jumpToPlaces", 1); //if 1 the login activity will jump directly to the places
         context.startActivity(placesIntent);
 
     }

@@ -42,11 +42,21 @@ public class LoginActivity extends AppCompatActivity
 
     private GoogleApiClient google;
     private FirebaseAuth mAuth;
+    String neighborhood;
+    String place;
+    int jumpTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        jumpTo = 0; //if 0 itll go to the main menu, if 1 itll go to the places activity
+
+        Intent intent = getIntent();
+        neighborhood = intent.getStringExtra("neighborhood");
+        place = intent.getStringExtra("place");
+        jumpTo = intent.getIntExtra("jumpToPlaces", 0);
 
 
         SignInButton button = (SignInButton) findViewById(R.id.sign_in_button);
@@ -84,9 +94,15 @@ public class LoginActivity extends AppCompatActivity
     public void signInClick(View view) {
         Toast.makeText(this, "Sign in was clicked!", Toast.LENGTH_SHORT).show();
 
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
-        startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
-
+        if(jumpTo == 1){
+            Intent placesIntent = new Intent(this, PlacesActivity.class);
+            placesIntent.putExtra("neighborhood", neighborhood);
+            placesIntent.putExtra("place", place);
+            startActivity(placesIntent);
+        }else {
+            Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
+            startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
+        }
     }
 
 
