@@ -9,42 +9,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="179dp">
 
-        <CheckBox
-            android:id="@+id/checkBox3"
+        <CheckedTextView
+            android:id="@+id/bucket_list"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Skydive" />
-
-        <CheckBox
-            android:id="@+id/checkBox4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dog Sled" />
-
-        <CheckBox
-            android:id="@+id/checkBox5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hang Glide" />
-
-        <CheckBox
-            android:id="@+id/checkBox6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Zip Line" />
-
-        <CheckBox
-            android:id="@+id/checkBox7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Swim with Sharks" />
+            android:layout_height="match_parent"></CheckedTextView>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/add_bucket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="addBucket"
             android:text="Add Item" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
