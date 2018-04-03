@@ -32,4 +32,9 @@ public class MenuActivity extends AppCompatActivity {
         profileIntent.putExtra("name", username);
         startActivity(profileIntent);
     }
+
+    public void clickBroadcastButton(View view){
+        Intent finishedIntent = new Intent("edu.pitt.cs1699.stocks.BALANCE");
+        sendBroadcast(finishedIntent);
+    }
 }
