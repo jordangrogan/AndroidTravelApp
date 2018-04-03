@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -82,6 +83,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         return false;
 
+    }
+
+    // Back button click
+    public void back(View view) {
+        Intent menuActivity = new Intent(this, MenuActivity.class);
+        startActivity(menuActivity);
     }
 
 }

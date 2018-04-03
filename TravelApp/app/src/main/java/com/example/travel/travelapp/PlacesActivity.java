@@ -134,8 +134,8 @@ public class PlacesActivity extends AppCompatActivity {
     }
     // Back button click
     public void back(View view) {
-        Intent mapActivity = new Intent(this, MapActivity.class);
-        startActivity(mapActivity);
+        Intent menuActivity = new Intent(this, MenuActivity.class);
+        startActivity(menuActivity);
     }
 
 
