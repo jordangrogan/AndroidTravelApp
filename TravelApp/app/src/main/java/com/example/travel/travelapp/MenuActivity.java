@@ -23,11 +23,13 @@ public class MenuActivity extends AppCompatActivity {
 
     public void clickBucketButton(View view){
         Intent bucketIntent = new Intent(this, BucketListActivity.class);
+        bucketIntent.putExtra("name", username);
         startActivity(bucketIntent);
     }
 
     public void clickProfileButton(View view){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
+        profileIntent.putExtra("name", username);
         startActivity(profileIntent);
     }
 }

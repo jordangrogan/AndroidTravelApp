@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:clickable="true"
-                android:text="27 pts"
+                android:text=""
                 app:layout_constraintLeft_toRightOf="@+id/textView10"
                 android:layout_marginLeft="8dp"
                 app:layout_constraintTop_toTopOf="parent"

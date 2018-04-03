@@ -31,7 +31,6 @@ public class BucketListActivity extends ListActivity {
 
     ArrayList<String> bucketItems = new ArrayList<>();
     ArrayAdapter<String> adapter;
-    Intent intent = getIntent();
     String username = "";
 
 
@@ -40,6 +39,7 @@ public class BucketListActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bucket_list);
+        Intent intent = getIntent();
         username = intent.getStringExtra("name");
         makeList();
 
@@ -58,8 +58,8 @@ public class BucketListActivity extends ListActivity {
         alert.setView(input);
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                fb.child("users").child(username).child("activities").setValue(input.getText().toString());
-                fb.child("users").child(username).child("activities").child(input.getText().toString()).child("checked").setValue(false);
+                fb.child("users").child(username).child("activities").child(input.getText().toString());
+                fb.child("users").child(username).child("activities").child(input.getText().toString()).setValue(false);
             }
         });
 
@@ -83,23 +83,25 @@ public class BucketListActivity extends ListActivity {
         setListAdapter(adapter);
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         fb.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot data){
+            @Override
+            public void onDataChange(DataSnapshot data) {
 
-            DataSnapshot activites_child = data.child("users").child(username).child("activities");
-            for(DataSnapshot activities_child: data.getChildren()){
-                String activity = activities_child.getValue(String.class);
-                bucketItems.add(activity);
-                adapter.notifyDataSetChanged();
+                if (data.child("users").child(username).child("activities").exists()) {
+                    DataSnapshot activites_child = data.child("users").child(username).child("activities");
+                    for (DataSnapshot activities_child : data.getChildren()) {
+                        String activity = activities_child.getKey();
+                        bucketItems.add(activity);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             }
-        }
 
-        @Override
-        public void onCancelled(DatabaseError databaseError){
-            //error
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError){
+                //error
+            }
 
-    });
+        });
 
 
     }

@@ -12,18 +12,19 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="179dp">
-
-        <CheckedTextView
-            android:id="@+id/bucket_list"
-            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></CheckedTextView>
-
         <Button
             android:id="@+id/add_bucket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="addBucket"
             android:text="Add Item" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
