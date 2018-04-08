@@ -26,18 +26,37 @@ public class MyReceiver extends BroadcastReceiver {
         Log.d(TAG, "onReceive: ");
         Log.d(TAG, "==========================================");
 
-        Toast toast = Toast.makeText(context, "received", Toast.LENGTH_SHORT);
-        toast.show();
+        //Toast toast = Toast.makeText(context, "received", Toast.LENGTH_SHORT).show();
 
         String storeInfo = intent.getStringExtra("storeInfo");
-        String[] info = storeInfo.split("/"); //[0] is name, [1] is longitude, [2] is latitude
-        //TODO: pick a neighborhood based off of latatude and longitude
-        Intent placesIntent = new Intent(context, LoginActivity.class);
+        String[] info = storeInfo.split("/"); //[0] is name, [1] is latitude, [2] is longitude
 
-        placesIntent.putExtra("neighborhood", "oakland");
-        placesIntent.putExtra("place", info[0]);
-        placesIntent.putExtra("jumpToPlaces", 1); //if 1 the login activity will jump directly to the places
-        context.startActivity(placesIntent);
+        // Pick a neighborhood based off of latitude and longitude
+        double lon = Double.parseDouble(info[2]);
+        double lat = Double.parseDouble(info[1]);
+        Log.v("longitude", lon + "");
+        Log.v("latitutde", lat + "");
+        String neighborhood = "";
+        // Figured out these coordinates based on https://www.latlong.net
+        if(lon < -79.973420) {
+            if(lat > 40.444463) {
+                // north side
+                neighborhood = "northside";
+            } else {
+                // downtown
+                neighborhood = "downtown";
+            }
+        } else {
+            // oakland
+            neighborhood = "oakland";
+        }
+
+
+        Intent i = new Intent(context, LoginActivity.class);
+
+        i.putExtra("neighborhood", neighborhood);
+        i.putExtra("place", info[0]);
+        context.startActivity(i);
 
     }
 }

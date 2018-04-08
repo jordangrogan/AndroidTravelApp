@@ -44,21 +44,22 @@ public class LoginActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     String neighborhood;
     String place;
-    int jumpTo;
-    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        jumpTo = 0; //if 0 itll go to the main menu, if 1 itll go to the places activity
-
         Intent intent = getIntent();
-        neighborhood = intent.getStringExtra("neighborhood");
-        place = intent.getStringExtra("place");
-        jumpTo = intent.getIntExtra("jumpToPlaces", 0);
-
+        if(intent.hasExtra("neighborhood") && intent.hasExtra("place")) {
+            neighborhood = intent.getStringExtra("neighborhood");
+            place = intent.getStringExtra("place");
+        } else {
+            neighborhood = "";
+            place = "";
+        }
+        Log.v("neighborhood recd", "-->" + neighborhood);
+        Log.v("place recd", "-->" + place);
 
         SignInButton button = (SignInButton) findViewById(R.id.sign_in_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -93,18 +94,9 @@ public class LoginActivity extends AppCompatActivity
      * It launches the Google Sign-in activity and waits for a result.
      */
     public void signInClick(View view) {
-        Toast.makeText(this, "Sign in was clicked!", Toast.LENGTH_SHORT).show();
-
-        if(jumpTo == 1){
-            Intent placesIntent = new Intent(this, PlacesActivity.class);
-            placesIntent.putExtra("neighborhood", neighborhood);
-            placesIntent.putExtra("place", place);
-            placesIntent.putExtra("name",name);
-            startActivity(placesIntent);
-        }else {
-            Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
-            startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
-        }
+        //Toast.makeText(this, "Sign in was clicked!", Toast.LENGTH_SHORT).show();
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(google);
+        startActivityForResult(intent, REQ_CODE_GOOGLE_SIGNIN);
     }
 
 
@@ -134,10 +126,10 @@ public class LoginActivity extends AppCompatActivity
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.d("tag", "signInWithCredential", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            //        Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(LoginActivity.this, "Authentication Sucessful.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Authentication Sucessful.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -167,11 +159,14 @@ public class LoginActivity extends AppCompatActivity
 
                     }
                 });
-                name = acct.getDisplayName();
 
                 Intent startIntent = new Intent(this, MenuActivity.class );
                 startIntent.putExtra("name",acct.getDisplayName());
                 startIntent.putExtra("id",acct.getId());
+                Log.d("Neighborhood", "-->" + neighborhood);
+                Log.d("Place", "-->" + place);
+                startIntent.putExtra("neighborhood", neighborhood);
+                startIntent.putExtra("place", place);
                 startActivityForResult(startIntent, 1);
             } else {
                 Log.v("login", "failure");

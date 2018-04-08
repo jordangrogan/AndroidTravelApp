@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,40 +37,20 @@ public class PlacesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places);
 
+        username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        Log.v("PlacesActivity", "Username is " + username);
+
         // Get Neighborhood Information from Intent
         Intent intent = getIntent();
-        username = intent.getStringExtra("name");
-
         final String neighborhood = intent.getStringExtra("neighborhood");
-        String place = intent.getStringExtra("place");
-
-        Log.v("neighborhood", ""+neighborhood);
-        Log.v("place", ""+place);
-        if(place != null){
-            //TODO: if a place is received from the broadcast receiver it needs added to the database
-            DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
-            fb.child("neighborhoods").child(neighborhood).child("places").child(place).setValue(true);
-        }
-
-//        IntentFilter intentFilter=new MyReceiver =new MyBroadcastReceiver();
-//        IntentFilter("com.pkg.perform.Ruby");
-//        if(intentFilter!=null)
-//        {
-//            registerReceiver(MyReceiver,intentFilter);
-//
-//        }
 
         // Add the Neighborhood to the TextView
         TextView txtNeighborhood = (TextView) findViewById(R.id.txtNeighborhood);
         txtNeighborhood.setText(neighborhood);
 
-
-
         final LinearLayout ll = findViewById(R.id.checkBoxLayout);
 
-
-
-        //TODO: this will need to go inside a database call looping through each option
+        // Loops through each place
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         //event listeners
         fb.addValueEventListener(new ValueEventListener(){
@@ -134,8 +115,7 @@ public class PlacesActivity extends AppCompatActivity {
     }
     // Back button click
     public void back(View view) {
-        Intent menuActivity = new Intent(this, MenuActivity.class);
-        startActivity(menuActivity);
+        finish();
     }
 
 
