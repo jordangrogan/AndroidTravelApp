@@ -11,9 +11,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    String storeName = "Giant Eagle";
-    String latitude = "70";
-    String longitude = "70";
+    String storeName = "CVS";
+    String latitude = "40.442279";
+    String longitude = "-80.002267";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
