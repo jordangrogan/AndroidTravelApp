@@ -3,9 +3,11 @@ package com.example.travel.travelapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Intent intent = getIntent();
-        username = intent.getStringExtra("name");
+        username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usertable = fb.child("users").child(username);
         usertable.addValueEventListener(new ValueEventListener() {
@@ -35,7 +37,10 @@ public class ProfileActivity extends AppCompatActivity {
                     bio.setText("Fill in your bio!");
                 }
                 if(dataSnapshot.child("score").exists()){
-                    score.setText(dataSnapshot.child("score").getValue(String.class));
+                    Log.v("dataSnapshot", dataSnapshot.toString());
+                    String points = dataSnapshot.child("score").getValue(Long.class).toString();
+                    Log.v("score", points);
+                    score.setText(points);
                 } else {
                     bio.setText("0 pts");
                     dataSnapshot.child("score").getRef().setValue(0);

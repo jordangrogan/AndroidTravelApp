@@ -21,6 +21,8 @@ public class MenuActivity extends AppCompatActivity {
         String place = "";
 
         Intent i = getIntent();
+
+        // Check to see if the intent included a neighborhood & place to add
         if(i.hasExtra("neighborhood") && i.hasExtra("place")) {
             neighborhood = i.getStringExtra("neighborhood");
             place = i.getStringExtra("place");
@@ -30,8 +32,6 @@ public class MenuActivity extends AppCompatActivity {
                 fb.child("neighborhoods").child(neighborhood).child("places").child(place).setValue(true);
                 Toast.makeText(this, place + " added to the " + neighborhood + " neighborhood!", Toast.LENGTH_LONG).show();
             }
-        } else {
-            Log.v("No Extras", "Did not receive place or neighborhood");
         }
     }
 
@@ -49,7 +49,6 @@ public class MenuActivity extends AppCompatActivity {
 
     public void clickProfileButton(View view){
         Intent profileIntent = new Intent(this, ProfileActivity.class);
-        profileIntent.putExtra("name", username);
         startActivity(profileIntent);
     }
 
