@@ -1,25 +1,19 @@
 package com.example.travel.travelapp;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,23 +21,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class BucketListActivity extends ListActivity {
+public class BucketListActivity extends AppCompatActivity {
 
-    ArrayList<String> bucketItems = new ArrayList<>();
-    ArrayAdapter<String> adapter;
     String username = "";
-
-
+    LinearLayout ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bucket_list);
         Intent intent = getIntent();
-        username = intent.getStringExtra("name");
+        username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+        ll = findViewById(R.id.checkBoxLayout);
+
         makeList();
-
-
 
     }
 
@@ -73,36 +65,59 @@ public class BucketListActivity extends ListActivity {
         builder.show();
         makeList();
 
-
-
     }
 
     private void makeList(){
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.activity_list_item, bucketItems);
-        setListAdapter(adapter);
-        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
-        fb.addValueEventListener(new ValueEventListener() {
+        // Loops through each place
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference().child("users").child(username).child("activities");
+        //event listeners
+        fb.addValueEventListener(new ValueEventListener(){
             @Override
-            public void onDataChange(DataSnapshot data) {
-
-                if (data.child("users").child(username).child("activities").exists()) {
-                    DataSnapshot activites_child = data.child("users").child(username).child("activities");
-                    for (DataSnapshot activities_child : data.getChildren()) {
-                        String activity = activities_child.getKey();
-                        bucketItems.add(activity);
-                        adapter.notifyDataSetChanged();
+            public void onDataChange(DataSnapshot data){
+                ll.removeAllViews();
+                for(final DataSnapshot activity: data.getChildren()){
+                    CheckBox cb = new CheckBox(getApplicationContext());
+                    cb.setText(activity.getKey());
+                    cb.setTextColor(Color.BLACK);
+                    Log.v("Activity done?", "-" + activity.getValue().toString());
+                    if(activity.getValue().toString().equals("true")) {
+                        cb.setChecked(true);
+                    } else {
+                        cb.setChecked(false);
                     }
+
+                    cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if(isChecked){
+                                completedActivity(activity.getKey());
+                            } else{
+                                unCompletedActivity(activity.getKey());
+                            }
+                        }
+                    });
+                    ll.addView(cb);
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError){
-                //error
-            }
 
+            }
         });
 
-
     }
+
+    private void completedActivity(String activity){
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        fb.child("users").child(username).child("activities").child(activity).setValue(true);
+    }
+
+    private void unCompletedActivity(String activity){
+        DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
+        fb.child("users").child(username).child("activities").child(activity).setValue(false);
+    }
+
 }

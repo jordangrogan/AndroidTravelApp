@@ -9,22 +9,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="179dp">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtBucketList"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="Bucket List"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            tools:layout_editor_absoluteX="131dp"
+            tools:layout_editor_absoluteY="0dp" />
+
         <Button
             android:id="@+id/add_bucket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:onClick="addBucket"
             android:text="Add Item" />
 
-        <ListView
-            android:id="@android:id/list"
-            android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+        <LinearLayout
+            android:id="@+id/checkBoxLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="0dp">
+        </LinearLayout>
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

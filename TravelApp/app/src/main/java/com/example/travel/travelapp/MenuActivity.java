@@ -37,13 +37,11 @@ public class MenuActivity extends AppCompatActivity {
 
     public void clickMapButton(View view){
         Intent mapIntent = new Intent(this, MapActivity.class );
-        mapIntent.putExtra("name", username);
         startActivity(mapIntent);
     }
 
     public void clickBucketButton(View view){
         Intent bucketIntent = new Intent(this, BucketListActivity.class);
-        bucketIntent.putExtra("name", username);
         startActivity(bucketIntent);
     }
 
