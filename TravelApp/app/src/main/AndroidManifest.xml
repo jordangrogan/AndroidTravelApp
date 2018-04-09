@@ -66,6 +66,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.travel.travelapp.ProfileActivity" />
         </activity>
+
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="com.example.travel.travelapp"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".ScoreActivity"></activity>
     </application>
 
 </manifest>

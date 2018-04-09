@@ -39,5 +39,12 @@
             android:onClick="clickBroadcastButton"
             android:text="Check Stock Balance" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addNameToContentProvider"
+            android:onClick="clickScoreButton"
+            android:text="check score"/>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
