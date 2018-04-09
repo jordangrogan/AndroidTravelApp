@@ -44,9 +44,8 @@ public class PlacesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String neighborhood = intent.getStringExtra("neighborhood");
 
-        // Add the Neighborhood to the TextView
-        TextView txtNeighborhood = (TextView) findViewById(R.id.txtNeighborhood);
-        txtNeighborhood.setText(neighborhood);
+        // Add the Neighborhood to the title bar
+        setTitle(neighborhood.substring(0, 1).toUpperCase() + neighborhood.substring(1)); // Uppercases neighborhood
 
         final LinearLayout ll = findViewById(R.id.checkBoxLayout);
 

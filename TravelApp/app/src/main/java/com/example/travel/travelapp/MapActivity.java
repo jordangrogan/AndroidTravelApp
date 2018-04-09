@@ -41,8 +41,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onDataChange(DataSnapshot data){
                 //generate markers dynamically from fb data
                 for(DataSnapshot neighborhood: data.getChildren()){
+                    String neighborhoodCapitalized = neighborhood.getKey().substring(0, 1).toUpperCase() + neighborhood.getKey().substring(1);
                     neighborhoodMarkers.add(new MarkerOptions().position(new LatLng(neighborhood.child("lat").getValue(double.class),
-                            neighborhood.child("long").getValue(double.class))).title(neighborhood.getKey()));
+                            neighborhood.child("long").getValue(double.class))).title(neighborhoodCapitalized));
                 }
                 //create map
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -71,7 +72,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        String neighborhood = marker.getTitle(); // Get the title from the marker to denote the neighborhood
+        String neighborhood = marker.getTitle().toLowerCase(); // Get the title from the marker to denote the neighborhood
         // Start Places Activity with the neighborhood information
         Intent intent = new Intent(this, PlacesActivity.class);
         intent.putExtra("neighborhood", neighborhood);
