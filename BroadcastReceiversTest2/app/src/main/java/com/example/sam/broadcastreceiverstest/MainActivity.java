@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void buttonClick(View view){
+    public void broadcastClick(View view){
 //        Intent newIntent = new Intent("com.example.travel.travelapp");
 //        sendBroadcast(newIntent, android.Manifest.permission.VIBRATE);
 
@@ -34,5 +34,16 @@ public class MainActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         intent.putExtra("storeInfo", storeName + "/" + latitude + "/" + longitude);
         sendBroadcast(intent);
+    }
+
+    public void intentClick1(View view){
+        Intent finishedIntent = new Intent("com.example.travel.travelapp.ScoreActivity");
+        finishedIntent.putExtra("foodItem", "Oreos");
+        finishedIntent.putExtra("price", 3.99);
+        sendBroadcast(finishedIntent);
+    }
+
+    public void intentClick2(View view){
+
     }
 }

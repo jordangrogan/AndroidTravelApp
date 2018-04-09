@@ -1,6 +1,7 @@
 package com.example.travel.travelapp;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,14 @@ public class ScoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
+
+        String foodItem = "";
+        String price = "";
+
+        Intent i = getIntent();
+
+        i.getStringExtra("foodItem");
+        i.getIntExtra("price", 0);
     }
 
     public void onClickAddName(View view) {
@@ -27,5 +36,15 @@ public class ScoreActivity extends AppCompatActivity {
         Uri uri = getContentResolver().insert(MyContentProvider.CONTENT_URI, values);
 
         Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    public void onClickMenu(View view){
+        Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
+    }
+
+    public void onClickSignIn(View view){
+        Intent signIntent = new Intent(this, LoginActivity.class);
+        startActivity(signIntent);
     }
 }
