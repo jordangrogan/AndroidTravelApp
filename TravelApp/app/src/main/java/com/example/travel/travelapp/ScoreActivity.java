@@ -17,16 +17,16 @@ public class ScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_score);
 
         String foodItem = "test";
-        int price = 0;
+        double price = 0;
 
         Intent i = getIntent();
 
         foodItem = i.getStringExtra("foodItem");
-        price = i.getIntExtra("price", 0);
+        price = i.getDoubleExtra("price", 0);
 
         EditText item = (EditText) findViewById(R.id.editText1);
         EditText p = (EditText) findViewById(R.id.editText2);
-        String pr = Integer.toString(price);
+        String pr = Double.toString(price);
         item.setText(foodItem);
         p.setText(pr);
     }
