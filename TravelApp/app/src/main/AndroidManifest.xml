@@ -34,7 +34,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAwm-WN3FFtApvc6OhZjdTsE3JCgcFjaxE" />
 
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileActivity" >
+            <intent-filter>
+                <action android:name="com.example.travel.travelapp.ProfileActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,7 +78,12 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ScoreActivity"></activity>
+        <activity android:name=".ScoreActivity">
+            <intent-filter>
+                <action android:name="com.example.travel.travelapp.ScoreActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +22,15 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Intent intent = getIntent();
+
+        String foodCategory = "";
+
+        foodCategory = intent.getStringExtra("foodCategory");
+        Log.v("food category", ""+foodCategory);
+        Toast.makeText(this, foodCategory,Toast.LENGTH_LONG);
+
+
+
         username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usertable = fb.child("users").child(username);

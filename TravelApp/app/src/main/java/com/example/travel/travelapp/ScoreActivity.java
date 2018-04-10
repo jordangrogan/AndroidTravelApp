@@ -16,13 +16,19 @@ public class ScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        String foodItem = "";
-        String price = "";
+        String foodItem = "test";
+        int price = 0;
 
         Intent i = getIntent();
 
-        i.getStringExtra("foodItem");
-        i.getIntExtra("price", 0);
+        foodItem = i.getStringExtra("foodItem");
+        price = i.getIntExtra("price", 0);
+
+        EditText item = (EditText) findViewById(R.id.editText1);
+        EditText p = (EditText) findViewById(R.id.editText2);
+        String pr = Integer.toString(price);
+        item.setText(foodItem);
+        p.setText(pr);
     }
 
     public void onClickAddName(View view) {

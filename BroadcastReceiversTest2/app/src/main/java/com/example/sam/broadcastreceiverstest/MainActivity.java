@@ -37,13 +37,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void intentClick1(View view){
-        Intent finishedIntent = new Intent("com.example.travel.travelapp.ScoreActivity");
-        finishedIntent.putExtra("foodItem", "Oreos");
-        finishedIntent.putExtra("price", 3.99);
-        sendBroadcast(finishedIntent);
+        intent1("Oreos", 3.99);
     }
 
     public void intentClick2(View view){
+        intent2("dairy");
+    }
 
+    private void intent1(String item, double price){
+        Log.v("intent1", "this");
+
+        Intent finishedIntent = new Intent("com.example.travel.travelapp.ScoreActivity");
+        finishedIntent.putExtra("foodItem", item);
+        finishedIntent.putExtra("price", price);
+        sendBroadcast(finishedIntent);
+    }
+
+    private void intent2(String randomFoodCategory){
+        Log.v("intent2", "this");
+        Intent finishedIntent = new Intent("com.example.travel.travelapp.ProfileActivity");
+        finishedIntent.putExtra("foodCategory", randomFoodCategory);
+        sendBroadcast(finishedIntent);
     }
 }
