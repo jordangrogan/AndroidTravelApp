@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -93,8 +94,17 @@ public class BucketListActivity extends AppCompatActivity {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if(isChecked){
                                 completedActivity(activity.getKey());
+                                //buy shares
+                                Toast.makeText(BucketListActivity.this, "Buy shares", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.setClassName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.BuyShares");
+                                startActivity(intent);
                             } else{
                                 unCompletedActivity(activity.getKey());
+                                Toast.makeText(BucketListActivity.this, "Sell shares", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.setClassName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.SellShares");
+                                startActivity(intent);
                             }
                         }
                     });

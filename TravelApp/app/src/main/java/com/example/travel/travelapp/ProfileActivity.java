@@ -27,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         foodCategory = intent.getStringExtra("foodCategory");
         Log.v("food category", ""+foodCategory);
-        Toast.makeText(this, "Received the category: "+foodCategory,Toast.LENGTH_LONG);
+        Toast.makeText(this, "Received the category: "+foodCategory,Toast.LENGTH_LONG).show();
 
 
 
