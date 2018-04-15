@@ -30,11 +30,17 @@ public class ProfileActivity extends AppCompatActivity {
         if(foodCategory != null)
             Toast.makeText(this, "Received the category: "+foodCategory,Toast.LENGTH_LONG).show();
 
-
-
         username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         DatabaseReference fb = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usertable = fb.child("users").child(username);
+
+        // If getting setScore from Broadcast Receiver
+        if(intent.hasExtra("setScore")) {
+            int score = intent.getIntExtra("setScore", 0);
+            Log.d("ProfileAct", "Score: " + score);
+            usertable.child("score").setValue(score);
+        }
+
         usertable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

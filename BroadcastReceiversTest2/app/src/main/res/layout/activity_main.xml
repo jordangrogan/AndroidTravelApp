@@ -33,6 +33,13 @@
             android:onClick="intentClick2"
             android:text="Send an intent category"/>
 
+        <Button
+            android:id="@+id/serviceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="serviceClick"
+            android:text="SEND A RANDOM SCORE VIA SERVICE IPC" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -58,4 +58,21 @@ public class MainActivity extends AppCompatActivity {
         finishedIntent.putExtra("foodCategory", randomFoodCategory);
         startActivity(finishedIntent);
     }
+
+    public void serviceClick(View view) {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.example.travel.travelapp", "com.example.travel.travelapp.ScoreService"));
+        intent.putExtra("setScore", 15);
+        Log.v("TestApp", "Starting service");
+        startService(intent);
+
+//        String p = "com.example.travel.travelapp";
+//        Intent intent = new Intent();
+//        intent.setAction("com.example.travel.travelapp.DISCONNECT");
+//        intent.setClassName(p, p+".MyReceiver");
+//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+//        intent.putExtra("setScore", 500);
+//        sendBroadcast(intent);
+
+    }
 }
