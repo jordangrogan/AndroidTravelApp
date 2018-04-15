@@ -1,6 +1,7 @@
 package com.example.travel.travelapp;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -96,15 +97,23 @@ public class BucketListActivity extends AppCompatActivity {
                                 completedActivity(activity.getKey());
                                 //buy shares
                                 Toast.makeText(BucketListActivity.this, "Buy shares", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.setClassName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.BuyShares");
-                                startActivity(intent);
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.setClassName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.BuyShares");
+                                    startActivity(intent);
+                                } catch(ActivityNotFoundException e) {
+                                    Log.d("BucketList", "Stocks activity not found");
+                                }
                             } else{
                                 unCompletedActivity(activity.getKey());
                                 Toast.makeText(BucketListActivity.this, "Sell shares", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.setClassName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.SellShares");
-                                startActivity(intent);
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.setClassName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.SellShares");
+                                    startActivity(intent);
+                                } catch(ActivityNotFoundException e) {
+                                    Log.d("BucketList", "Stocks activity not found");
+                                }
                             }
                         }
                     });
