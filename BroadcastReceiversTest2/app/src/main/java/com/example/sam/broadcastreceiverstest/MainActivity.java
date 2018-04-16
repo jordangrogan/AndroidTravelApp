@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    String storeName = "CVS";
+    String storeName = "Walgreens";
     String latitude = "40.442279";
     String longitude = "-80.002267";
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void serviceClick(View view) {
         Random rand = new Random();
-        int randomNum = rand.nextInt((100 - 0) + 1) + 100;
+        int randomNum = rand.nextInt(101);
         Intent intent = new Intent("com.example.travel.travelapp.ScoreService");
         intent.setComponent(new ComponentName("com.example.travel.travelapp", "com.example.travel.travelapp.ScoreService"));
         intent.putExtra("setScore", randomNum);
