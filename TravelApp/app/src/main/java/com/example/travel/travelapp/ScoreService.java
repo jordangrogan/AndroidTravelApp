@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.URL;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -73,6 +74,8 @@ public class ScoreService extends Service
      */
     public void onCreate() {
         super.onCreate();
+
+        startForeground(1,new Notification());
 
         // Create and start a background HandlerThread since by
         // default a Service runs in the UI Thread, which we don't
