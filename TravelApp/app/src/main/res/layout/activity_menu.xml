@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/addNameToContentProvider"
             android:onClick="clickScoreButton"
-            android:text="check score"/>
+            android:text="Add item to list"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
