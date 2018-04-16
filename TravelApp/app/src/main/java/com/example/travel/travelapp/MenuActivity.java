@@ -61,8 +61,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void clickCheckStockPrice(View view) {
-        Intent intent = new Intent("edu.pitt.cs1699.stocks.StockPriceChangeActivity");
-        intent.setComponent(new ComponentName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.StockPriceChangeActivity"));
+        Intent intent = new Intent("edu.pitt.cs1699.stocks.StockPriceService");
+        intent.setComponent(new ComponentName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.StockPriceService"));
         startService(intent);
     }
 
