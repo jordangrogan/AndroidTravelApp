@@ -33,6 +33,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAwm-WN3FFtApvc6OhZjdTsE3JCgcFjaxE" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".ProfileActivity" >
             <intent-filter>

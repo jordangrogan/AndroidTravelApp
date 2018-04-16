@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.travel.travelapp.ScoreActivity">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/pitt_flag">
 
         <EditText
             android:id="@+id/editText1"
@@ -31,12 +34,14 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/alfa_slab_one"
             android:text="Add Item"
             android:onClick="onClickAddName"/>
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/alfa_slab_one"
             android:text="Go to Menu"
             android:onClick="onClickMenu"/>
 
@@ -44,6 +49,7 @@
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/alfa_slab_one"
             android:text="Go to Sign in"
             android:onClick="onClickSignIn"/>
     </LinearLayout>
