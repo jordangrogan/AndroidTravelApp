@@ -84,6 +84,11 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+        <service android:name="ScoreService"
+            android:process=":my_process"
+            android:exported="true" />
+
     </application>
 
 </manifest>

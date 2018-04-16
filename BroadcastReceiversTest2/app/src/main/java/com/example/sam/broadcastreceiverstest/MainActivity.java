@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     String storeName = "CVS";
@@ -22,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void broadcastClick(View view){
-//        Intent newIntent = new Intent("com.example.travel.travelapp");
-//        sendBroadcast(newIntent, android.Manifest.permission.VIBRATE);
-
         String p = "com.example.travel.travelapp";
         Toast.makeText(this,p, Toast.LENGTH_LONG);
         Log.v("broadcast", p);
@@ -60,19 +59,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void serviceClick(View view) {
-        Intent intent = new Intent();
+        Random rand = new Random();
+        int randomNum = rand.nextInt((100 - 0) + 1) + 100;
+        Intent intent = new Intent("com.example.travel.travelapp.ScoreService");
         intent.setComponent(new ComponentName("com.example.travel.travelapp", "com.example.travel.travelapp.ScoreService"));
-        intent.putExtra("setScore", 15);
-        Log.v("TestApp", "Starting service");
+        intent.putExtra("setScore", randomNum);
         startService(intent);
-
-//        String p = "com.example.travel.travelapp";
-//        Intent intent = new Intent();
-//        intent.setAction("com.example.travel.travelapp.DISCONNECT");
-//        intent.setClassName(p, p+".MyReceiver");
-//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-//        intent.putExtra("setScore", 500);
-//        sendBroadcast(intent);
-
     }
 }

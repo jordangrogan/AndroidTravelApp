@@ -94,15 +94,22 @@ public class ScoreService extends Service
     public int onStartCommand(Intent intent,
                               int flags,
                               int startId) {
+
+        int score = intent.getIntExtra("setScore", 0);
+
+        Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+        i.putExtra("setScore", score);
+        startActivity(i);
+
         // Create a Message that will be sent to ServiceHandler to
         // retrieve animagebased on the URI in the Intent.
-        Message message =
-                mServiceHandler.makeDownloadMessage(intent,
-                        startId);
+        //Message message =
+        //        mServiceHandler.makeDownloadMessage(intent,
+        //                startId);
 
         // Send the Message to ServiceHandler to retrieve an image
         // based on contents of the Intent.
-        mServiceHandler.sendMessage(message);
+        // mServiceHandler.sendMessage(message);
 
         // Don't restart the DownloadService automatically if its
         // process is killed while it's running.
@@ -190,28 +197,16 @@ public class ScoreService extends Service
          */
         private void downloadImageAndReply(Intent intent) {
 
-            int score = intent.getIntExtra("setScore", 0);
-            Log.d("Service", "Set Score to: " + score);
-
-            // Send via broadcast receiver
-            String p = "com.example.travel.travelapp";
-            Intent broadcastIntent = new Intent();
-            broadcastIntent.setAction("com.example.travel.travelapp.DISCONNECT");
-            broadcastIntent.setClassName(p, p+".MyReceiver");
-            broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-            broadcastIntent.putExtra("setScore", score);
-            sendBroadcast(broadcastIntent);
-
             // Download the requested image.
-            //String pathname = downloadImage(ScoreService.this,
-            //        intent.getData().toString());
+            String pathname = downloadImage(ScoreService.this,
+                    intent.getData().toString());
 
-            // Extract the Messenger.
-            // Messenger messenger = (Messenger)
-            //        intent.getExtras().get(MESSENGER);
+             //Extract the Messenger.
+             Messenger messenger = (Messenger)
+                    intent.getExtras().get(MESSENGER);
 
-            // Send the pathname via the messenger.
-            //sendPath(messenger, pathname);
+             //Send the pathname via the messenger.
+            sendPath(messenger, pathname);
         }
 
         /**
