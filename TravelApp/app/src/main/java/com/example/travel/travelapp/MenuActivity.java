@@ -1,5 +1,6 @@
 package com.example.travel.travelapp;
 
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
@@ -57,6 +58,12 @@ public class MenuActivity extends AppCompatActivity {
     public void clickBroadcastButton(View view) {
         Intent finishedIntent = new Intent("edu.pitt.cs1699.stocks.BALANCE");
         sendBroadcast(finishedIntent);
+    }
+
+    public void clickCheckStockPrice(View view) {
+        Intent intent = new Intent("edu.pitt.cs1699.stocks.StockPriceChangeActivity");
+        intent.setComponent(new ComponentName("edu.pitt.cs1699.stocks", "edu.pitt.cs1699.stocks.StockPriceChangeActivity"));
+        startService(intent);
     }
 
     public void clickScoreButton(View view) {

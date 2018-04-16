@@ -40,6 +40,13 @@
             android:text="Check Stock Balance" />
 
         <Button
+            android:id="@+id/checkStockPriceButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickCheckStockPrice"
+            android:text="Check Stock Price" />
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addNameToContentProvider"
